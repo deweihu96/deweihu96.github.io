@@ -35,3 +35,21 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+
+
+### Profile
+
+**Ph.D. Student at Novo Nordisk Foundation Center for Basic Metabolic Research, University of Copenhagen**
+
+Current Position: Ph.D Fellow at Novo Nordisk Foundation Center for Basic Metabolic Research
+
+### Research Metrics
+
+- **Total Citations:** 244
+- **h-index:** 1
+
+### Selected Publications
+
+1. **The STRING database in 2025: protein networks with directionality of regulation**
+2. **SPACE: STRING proteins as complementary embeddings**
+3. **Genome-wide rules of transcription factor cooperativity revealed through in silico binding site ablation**
