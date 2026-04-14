@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dewei Hu</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #1a1a2e;
+      background: #f4f6fb;
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    a { color: #1e6fb5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Sticky top nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2.5rem;
+      height: 54px;
+    }
+    .nav-identity {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-right: auto;
+      flex-shrink: 0;
+    }
+    .nav-identity img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 2px solid #e2e8f0;
+    }
+    .nav-identity span {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #0f2d56;
+    }
+    .nav-sections { display: flex; gap: 0.2rem; }
+    .nav-sections a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #4a5568;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-sections a:hover { background: #eef2ff; color: #1e6fb5; text-decoration: none; }
+    .nav-sections a.active { color: #1e6fb5; background: #eef2ff; }
+    .nav-socials { display: flex; gap: 0.3rem; margin-left: 0.8rem; }
+    .nav-socials a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      color: #718096;
+      transition: background 0.12s, color 0.12s;
+    }
+    .nav-socials a:hover { background: #eef2ff; color: #1e6fb5; text-decoration: none; }
+    .nav-socials svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* ── Page content ── */
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 5rem;
+    }
+
+    /* ── Hero (profile block) ── */
+    .hero {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 2rem 2.2rem;
+    }
+    .hero img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid #e2e8f0;
+      flex-shrink: 0;
+    }
+    .hero-text h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0f2d56;
+      margin-bottom: 0.2rem;
+    }
+    .hero-text .role {
+      font-size: 0.88rem;
+      color: #718096;
+      margin-bottom: 0.9rem;
+    }
+    .hero-text p { font-size: 0.9rem; color: #2d3748; max-width: 640px; }
+    .hero-text p + p { margin-top: 0.5rem; }
+    .hero-socials { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.1rem; }
+    .hero-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #f4f6fb;
+      border: 1px solid #d1d9e6;
+      color: #2d3748;
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      transition: border-color 0.12s, color 0.12s, background 0.12s;
+    }
+    .hero-socials a:hover { border-color: #1e6fb5; color: #1e6fb5; background: #eef2ff; text-decoration: none; }
+    .hero-socials svg { width: 13px; height: 13px; fill: currentColor; }
+
+    /* ── Sections ── */
+    section { margin-bottom: 2.8rem; }
+    h2 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #0f2d56;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #1e6fb5;
+    }
+
+    /* ── Education & Experience: two-column grid ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+    .entry-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.2rem;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+    .entry-item h3 { font-size: 0.88rem; font-weight: 700; color: #0f2d56; }
+    .entry-item .sub { font-size: 0.8rem; color: #4a5568; font-style: italic; }
+    .entry-item .meta { font-size: 0.73rem; color: #a0aec0; margin-top: 0.25rem; }
+
+    /* ── Publications ── */
+    .pub-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .pub-item {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+    }
+    .pub-item .pub-title {
+      font-weight: 700;
+      color: #0f2d56;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      line-height: 1.4;
+    }
+    .pub-item .pub-authors {
+      font-size: 0.8rem;
+      color: #4a5568;
+      margin-bottom: 0.12rem;
+    }
+    .pub-item .pub-authors strong { color: #1a1a2e; }
+    .pub-item .pub-venue { font-size: 0.8rem; color: #718096; font-style: italic; }
+    .pub-item .pub-footer {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+    }
+    .badge.prep     { background: #fff3cd; color: #856404; }
+    .badge.revision { background: #cce5ff; color: #004085; }
+    .badge.published{ background: #d4edda; color: #155724; }
+    .pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.22rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #4a5568;
+      background: #f4f6fb;
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+    .pub-link:hover { color: #1e6fb5; border-color: #1e6fb5; text-decoration: none; }
+    .pub-link svg { width: 11px; height: 11px; fill: currentColor; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+      color: #a0aec0;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      nav { padding: 0 1rem; }
+      .nav-identity span { display: none; }
+      .page { padding: 1.5rem 1rem 3rem; }
+      .hero { flex-direction: column; align-items: center; text-align: center; padding: 1.5rem 1.2rem; }
+      .hero-socials { justify-content: center; }
+      .two-col { grid-template-columns: 1fr; }
+      .nav-sections a { padding: 0.3rem 0.4rem; font-size: 0.76rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Top nav ── -->
+<nav>
+  <div class="nav-identity">
+    <img src="dewei-photo.png" alt="Dewei Hu" />
+    <span>Dewei Hu</span>
+  </div>
+  <div class="nav-sections">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#work">Experience</a>
+    <a href="#publications">Publications</a>
+  </div>
+  <div class="nav-socials">
+    <!-- Email -->
+    <a href="mailto:dewei.hu@sund.ku.dk" title="Email">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2-8 5-8-5h16zm0 12H4V9l8 5 8-5v9z"/></svg>
+    </a>
+    <!-- GitHub -->
+    <a href="https://github.com/deweihu96" target="_blank" title="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.88 10.95.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.41-1.27.74-1.56-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+    </a>
+    <!-- Google Scholar -->
+    <a href="https://scholar.google.com/citations?user=deweihu96" target="_blank" title="Google Scholar">
+      <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 10a8 8 0 0 1 7.162 3.44L24 9.5 12 0z"/></svg>
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/dewei-hu-65a717197/" target="_blank" title="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ── Content ── -->
+<div class="page">
+
+  <!-- About / Hero -->
+  <section id="about">
+    <div class="hero">
+      <img src="dewei-photo.png" alt="Dewei Hu" />
+      <div class="hero-text">
+        <h1>Dewei Hu</h1>
+        <p class="role">PhD Fellow · NNF Center for Basic Metabolic Research, University of Copenhagen</p>
+        <p>
+          I am a PhD fellow in Bioinformatics &amp; Network Biology, supervised by
+          <a href="https://rasmussen.ku.dk" target="_blank">Simon Rasmussen</a> and
+          <a href="https://jensenlab.org" target="_blank">Lars Juhl Jensen</a>.
+        </p>
+        <p>
+          My research focuses on machine learning and network biology methods for understanding complex diseases —
+          integrating metabolomics, proteomics, and protein interaction networks at population scale.
+          I also develop cross-species protein embeddings built on the <a href="https://string-db.org" target="_blank">STRING</a> database.
+        </p>
+        <div class="hero-socials">
+          <a href="mailto:dewei.hu@sund.ku.dk">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2-8 5-8-5h16zm0 12H4V9l8 5 8-5v9z"/></svg>
+            dewei.hu@sund.ku.dk
+          </a>
+          <a href="https://github.com/deweihu96" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.88 10.95.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.41-1.27.74-1.56-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a href="https://scholar.google.com/citations?user=deweihu96" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 10a8 8 0 0 1 7.162 3.44L24 9.5 12 0z"/></svg>
+            Google Scholar
+          </a>
+          <a href="https://www.linkedin.com/in/dewei-hu-65a717197/" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM3.56 20.45h3.55V9H3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="two-col">
+
+      <div class="entry-item">
+        <div>
+          <h3>University of Copenhagen</h3>
+          <div class="sub">PhD in Bioinformatics &amp; Network Biology</div>
+          <div class="sub" style="font-style:normal;color:#718096;font-size:0.76rem;">NNF Center for Protein Research / CBMR</div>
+        </div>
+        <div class="meta">2022 – 2026 · Copenhagen, Denmark</div>
+      </div>
+
+      <div class="entry-item">
+        <div>
+          <h3>University of Copenhagen</h3>
+          <div class="sub">MSc in Bioinformatics</div>
+        </div>
+        <div class="meta">2019 – 2021 · Copenhagen, Denmark</div>
+      </div>
+
+      <div class="entry-item">
+        <div>
+          <h3>Southwest University of Science and Technology</h3>
+          <div class="sub">BSc in Biotechnology</div>
+        </div>
+        <div class="meta">2015 – 2019 · Mianyang, China</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Work Experience -->
+  <section id="work">
+    <h2>Experience</h2>
+    <div class="two-col">
+
+      <div class="entry-item">
+        <div>
+          <h3>PhD Fellow</h3>
+          <div class="sub">NNF Center for Basic Metabolic Research, University of Copenhagen</div>
+        </div>
+        <div class="meta">Sep 2024 – Present · Copenhagen, Denmark</div>
+      </div>
+
+      <div class="entry-item">
+        <div>
+          <h3>Visiting PhD Student</h3>
+          <div class="sub">ZS Discovery (ZS Associates)</div>
+        </div>
+        <div class="meta">May – Aug 2025 · Kongens Lyngby, Denmark</div>
+      </div>
+
+      <div class="entry-item">
+        <div>
+          <h3>PhD Fellow</h3>
+          <div class="sub">NNF Center for Protein Research, University of Copenhagen</div>
+        </div>
+        <div class="meta">Aug 2022 – Dec 2024 · Copenhagen, Denmark</div>
+      </div>
+
+      <div class="entry-item">
+        <div>
+          <h3>Bioinformatics Engineer</h3>
+          <div class="sub">BioMap (BioMap Intelligent Technology Co., Ltd.)</div>
+        </div>
+        <div class="meta">Aug 2021 – Jun 2022 · Beijing, China</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Publications -->
+  <section id="publications">
+    <h2>Publications</h2>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <div class="pub-title">Proteome-augmented metabolomics improves disease risk prediction in population cohorts</div>
+        <div class="pub-authors"><strong>Hu D</strong>, Rohrer C, Jensen LJ, Rasmussen S.</div>
+        <div class="pub-venue">Manuscript in preparation (2026)</div>
+        <div class="pub-footer">
+          <span class="badge prep">In Preparation</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Molecular maps of diseases from omics data and network embeddings</div>
+        <div class="pub-authors"><strong>Hu D</strong>, Schaap-Johansen A-L, Villarroel J, Ekebjærg C, Rasmussen S, Hansen DH, Wernersson R, Jensen LJ.</div>
+        <div class="pub-venue">bioRxiv 2025.11.25.689280 — Under revision at npj Systems Biology and Applications</div>
+        <div class="pub-footer">
+          <span class="badge revision">Under Revision</span>
+          <a class="pub-link" href="https://www.biorxiv.org/content/10.1101/2025.11.25.689280" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+            Preprint
+          </a>
+          <a class="pub-link" href="https://github.com/larsjuhljensen/net2rank" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.88 10.95.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.41-1.27.74-1.56-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            Code
+          </a>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">SPACE: STRING proteins as complementary embeddings</div>
+        <div class="pub-authors"><strong>Hu D</strong>, Szklarczyk D, von Mering C, Jensen LJ.</div>
+        <div class="pub-venue">Bioinformatics 41(9):btaf496 (2025)</div>
+        <div class="pub-footer">
+          <span class="badge published">Published</span>
+          <a class="pub-link" href="https://academic.oup.com/bioinformatics/article/41/9/btaf496/8000000" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+            Paper
+          </a>
+          <a class="pub-link" href="https://github.com/deweihu96/SPACE" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.88 10.95.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.54-3.87-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.41-1.27.74-1.56-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            Code
+          </a>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Genome-wide rules of transcription factor cooperativity revealed through in silico binding site ablation</div>
+        <div class="pub-authors">He X, Einarsson H, Páleníková P, Rennie S, <strong>Hu D</strong>, Cui R, Vaagensø C, Lage K, Krautz R, Andersson R.</div>
+        <div class="pub-venue">bioRxiv 2025.06.19.660093 — Under revision at Nature Communications</div>
+        <div class="pub-footer">
+          <span class="badge revision">Under Revision</span>
+          <a class="pub-link" href="https://www.biorxiv.org/content/10.1101/2025.06.19.660093" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+            Preprint
+          </a>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">The STRING database in 2025: protein networks with directionality of regulation</div>
+        <div class="pub-authors">Szklarczyk D, Nastou K, Koutrouli M, Kirsch R, Mehryary F, Hachilif R, …, <strong>Hu D</strong>, …, von Mering C.</div>
+        <div class="pub-venue">Nucleic Acids Research 53(D1):D730–D737 (2025)</div>
+        <div class="pub-footer">
+          <span class="badge published">Published</span>
+          <a class="pub-link" href="https://academic.oup.com/nar/article/53/D1/D730/7900038" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+            Paper
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>Dewei Hu · Copenhagen, Denmark · 2026</footer>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-sections a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-sections a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
